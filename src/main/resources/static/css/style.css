@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+header{height:100px; background-color: #c9c9c9;}
+.content{min-height:500px;}
+
+footer{height:100px; background-color: #c9c9c9;}
+
+.table{
+	width: 500px;
+	margin: auto;
+	margin-top: 100px;
+}
+
+.table th{background-color: #e0e0e0;}
+.table td{}
+form .sign-in-btn{margin:auto; margin:50px;}
+
