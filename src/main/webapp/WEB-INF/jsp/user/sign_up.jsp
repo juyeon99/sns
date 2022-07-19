@@ -8,7 +8,7 @@
 			<%-- 인풋 옆에 중복확인 버튼을 옆에 붙이기 위해 div 만들고 d-flex --%>
 			<div class="d-flex ml-3 mt-3">
 				<input type="text" name="loginId" class="form-control col-6" placeholder="ID를 입력해주세요">
-				<button type="button" id="loginIdCheckBtn" class="btn btn-success">중복확인</button>
+				<button type="button" id="loginIdCheckBtn" class="btn btn-success ml-1">중복확인</button>
 			</div>
 			
 			<%-- 아이디 체크 결과 --%>
@@ -33,7 +33,7 @@
 				<input type="text" name="name" class="form-control col-6" placeholder="이름을 입력하세요">
 			</div>
 
-			<span class="sign-up-subject">이메일</span>
+			<span class="sign-up-subject">e-mail</span>
 			<div class="m-3">
 				<input type="text" name="email" class="form-control col-6" placeholder="이메일을 입력하세요">
 			</div>
@@ -77,9 +77,58 @@ $(document).ready(function(){
 		});
 	});
 	
-	$('#signUpForm').on('submit',function(){
+	$('#signUpForm').on('submit',function(e){
 		e.preventDefault();
+		let loginId = $('input[name=loginId]').val().trim();
+		if (loginId == "") {
+			alert("아이디를 입력하세요.");
+			return false;
+		}
 		
-	}
+		let password = $('input[name=password]').val();
+		let confirmPassword = $('input[name=confirmPassword]').val();
+		if (password == "" || confirmPassword == "") {
+			alert("비밀번호를 입력하세요");
+			return false;
+		}
+		
+		if (password != confirmPassword) {
+			alert("비밀번호가 일치하지 않습니다.");
+			$('#password').val("");
+			$('#confirmPassword').val("");
+			return false;
+		}
+		
+		let name = $('input[name=name]').val().trim();
+		if (name == "") {
+			alert("이름을 입력하세요");
+			return false;
+		}
+		
+		let email = $('input[name=email]').val().trim();
+		if (email == "") {
+			alert("이메일을 입력하세요");
+			return false;
+		}
+		
+		if ($('#idCheckOk').hasClass('d-none')) {
+			alert("아이디 중복확인을 해주세요.");
+			return false;
+		}
+		
+		// 서버에 전송
+		let url = $(this).attr("action"); 	// form태그에 있는 action값을 가져옴
+		let params = $(this).serialize(); 	// form태그에 들어있는 name 속성 값들을 한번에 가져옴
+		
+		$.post(url, params)
+		.done(function(data) {
+			if (data.result == "success") {
+				alert("회원가입을 환영합니다. 로그인을 해주세요.");
+				location.href = "/user/sign_in_view";
+			} else {
+				alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+			}
+		});
+	});
 });
 </script>

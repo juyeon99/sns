@@ -30,5 +30,34 @@
 </div>
 
 <script>
-
+$(document).ready(function(){
+	$('#loginForm').on('submit',function(e){
+		e.preventDefault();
+		let loginId = $('input[name=loginId]').val().trim();
+		if (loginId == "") {
+			alert("아이디를 입력하세요.");
+			return false;
+		}
+		
+		let password = $('input[name=password]').val();
+		let confirmPassword = $('input[name=confirmPassword]').val();
+		if (password == "" || confirmPassword == "") {
+			alert("비밀번호를 입력하세요");
+			return false;
+		}
+		
+		// 서버에 전송
+		let url = $(this).attr("action"); 	// form태그에 있는 action값을 가져옴
+		let params = $(this).serialize(); 	// form태그에 들어있는 name 속성 값들을 한번에 가져옴
+		
+		$.post(url, params)
+		.done(function(data) {
+			if (data.result) {
+				alert("로그인 되었습니다.");
+			} else {
+				alert("로그인에 실패했습니다. 다시 시도해주세요.");
+			}
+		});
+	});
+});
 </script>

@@ -22,4 +22,12 @@ public class UserBO {
 		return userDAO.existingID(loginId);
 	}
 
+	public void addUser(String loginId, String password, String name, String email) {
+		userDAO.insertUser(loginId, password, name, email);
+	}
+	
+	public boolean searchUserById(String loginId, String password) {
+		return userDAO.searchUserById(loginId, password);
+	}
+
 }
