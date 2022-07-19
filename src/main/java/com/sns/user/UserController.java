@@ -16,11 +16,11 @@ public class UserController {
 		return "template/layout";
 	}
 
-	// localhost:8080/user/login_view
-	@RequestMapping("/login_view")
-	public String loginView(Model model) {
+	// localhost:8080/user/sign_in_view
+	@RequestMapping("/sign_in_view")
+	public String signInView(Model model) {
 		model.addAttribute("viewName", "user/login");
 		return "template/layout";
 	}
-
+	
 }

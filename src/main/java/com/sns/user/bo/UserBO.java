@@ -18,4 +18,8 @@ public class UserBO {
 		return userDAO.selectUserList();
 	}
 
+	public boolean existingID(String loginId) {
+		return userDAO.existingID(loginId);
+	}
+
 }

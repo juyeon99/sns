@@ -15,4 +15,13 @@
         FROM
             `user`
     </select>
+    
+    <select id="existingID" parameterType="string" resultType="boolean">
+    	SELECT
+            COUNT(1)
+        FROM
+            `user`
+        WHERE
+        	`loginId` = #{loginId}
+    </select>
 </mapper>

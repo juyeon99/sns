@@ -5,13 +5,11 @@ header{height:100px; background-color: #c9c9c9;}
 
 footer{height:100px; background-color: #c9c9c9;}
 
-.table{
-	width: 500px;
-	margin: auto;
-	margin-top: 100px;
-}
+.sign-up-box {width:650px; background-color:#F4FCFD; margin-top:20px; box-shadow:5px 5px 5px 5px #BDC0C0;}
+.sign-up-subject {margin:20px; font-weight:bold;}
 
-.table th{background-color: #e0e0e0;}
-.table td{}
-form .sign-in-btn{margin:auto; margin:50px;}
+.shadow-box {width:550px; background-color:#F4FCFD; margin-top:20px; box-shadow:5px 5px 5px 5px #BDC0C0;}
+.login-box {width:400px;}
 
+.contents-box {width:650px;}
+#writeTextArea {height:100px;}
