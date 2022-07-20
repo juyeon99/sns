@@ -26,8 +26,8 @@ public class UserBO {
 		userDAO.insertUser(loginId, password, name, email);
 	}
 	
-	public boolean searchUserById(String loginId, String password) {
-		return userDAO.searchUserById(loginId, password);
+	public User getUserById(String loginId, String password) {
+		return userDAO.selectUserById(loginId, password);
 	}
 
 }

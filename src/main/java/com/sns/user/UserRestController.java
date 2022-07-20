@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,12 +56,25 @@ public class UserRestController {
 	@RequestMapping("/sign_in")
 	public Map<String,Object> signIn(
 			@RequestParam("loginId") String loginId,
-			@RequestParam("password") String password){
-		// db select
+			@RequestParam("password") String password,
+			HttpServletRequest req){
 		String encryptedPassword = EncryptUtils.md5(password);
-		boolean existsInfo = userBO.searchUserById(loginId,encryptedPassword);
+		User user = userBO.getUserById(loginId,encryptedPassword);
+		
 		Map<String,Object> result = new HashMap<>();
-		result.put("result", existsInfo);
+		if(user != null) {
+			// session - 로그인이 성공하면 로그인 상태 유지를 위해 세션에 사용자에 대한 필요한 정보를 담는다.
+			HttpSession session = req.getSession();
+			session.setAttribute("userId", user.getId());
+			session.setAttribute("userLoginId", user.getLoginId());
+			session.setAttribute("userName", user.getName());
+			
+			result.put("result", "success");
+		} else {
+			// 실패하면 실패 응답
+			result.put("errorMessage", "존재하지 않는 사용자입니다.");
+		}
+		
 		return result;
 	}
 	

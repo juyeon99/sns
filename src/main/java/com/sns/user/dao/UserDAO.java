@@ -19,7 +19,7 @@ public interface UserDAO {
 			@Param("name") String name, 
 			@Param("email") String email);
 	
-	public boolean searchUserById(
+	public User selectUserById(
 			@Param("loginId") String loginId, 
 			@Param("password") String password);
 }

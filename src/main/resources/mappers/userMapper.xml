@@ -46,9 +46,15 @@
 		)
     </insert>
     
-    <select id="searchUserById" parameterType="map" resultType="boolean">
+    <select id="selectUserById" parameterType="map" resultType="com.sns.user.model.User">
     	SELECT
-            COUNT(*)
+            `id`
+            , `loginId`
+            , `password`
+            , `name`
+			, `email`
+            , `createdAt`
+            , `updatedAt`
         FROM
             `user`
         WHERE

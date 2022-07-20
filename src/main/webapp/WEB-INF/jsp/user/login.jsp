@@ -40,8 +40,7 @@ $(document).ready(function(){
 		}
 		
 		let password = $('input[name=password]').val();
-		let confirmPassword = $('input[name=confirmPassword]').val();
-		if (password == "" || confirmPassword == "") {
+		if (password == "") {
 			alert("비밀번호를 입력하세요");
 			return false;
 		}
@@ -52,10 +51,11 @@ $(document).ready(function(){
 		
 		$.post(url, params)
 		.done(function(data) {
-			if (data.result) {
+			if (data.result == "success") {
 				alert("로그인 되었습니다.");
+				location.href="/timeline/timeline_view";
 			} else {
-				alert("로그인에 실패했습니다. 다시 시도해주세요.");
+				alert(data.errorMessage);
 			}
 		});
 	});
