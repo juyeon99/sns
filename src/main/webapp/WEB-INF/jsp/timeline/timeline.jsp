@@ -15,7 +15,7 @@
 					<!-- 업로드 된 이미지 파일명을 띄움 -->
 					<div id="fileName"></div>
 				</div>
-				<button type="button" class="btn btn-info m-1">게시</button>
+				<button type="button" id="uploadBtn" class="btn btn-info m-1">게시</button>
 			</div>
 		</div>
 	</div>
@@ -49,5 +49,43 @@ $(document).ready(function(){
 		// 임시파일명 노출
 		$('#fileName').text(fileName);
 	});
+	
+	$('#uploadBtn').on('click',function(){
+		// validation checking
+		let fileName = $('#fileName').text();	// ex) image.jpg
+		if(fileName == ''){
+			alert("포스팅할 사진을 선택하세요.");
+			return;
+		}
+		
+		// form 태그를 자바스크립트에서 만든다.
+		let formData = new FormData();
+		formData.append("content", content);
+		formData.append("file", $('#file')[0].files[0]);	// $('#file')[0]: 첫 번째 input file 태그, .files[0]: 업로드 된 첫 번째 파일
+		
+		// AJAX form 데이터 전송
+		$.ajax({
+			// request
+			type: "POST"
+			,url: "/post/create"
+			,data: formData
+			,encType: "multipart/form-data"	// file 업로드 필수 설정
+			,processData: false				// file 업로드 필수 설정 (이미지 파일이므로 data를 string으로 변환하지 않하게 함)
+			,contentType: false				// file 업로드 필수 설정
+			
+			// response
+			,success: function(data){
+				if(data.result == "success"){
+					alert("메모가 저장되었습니다.");
+					//location.href = "";
+				} else{
+					alert(data.errorMessage);
+				}
+			}
+			,error: function(e){
+				alert("메모 저장 실패");
+			}
+		});
+	}); 
 });
 </script>
