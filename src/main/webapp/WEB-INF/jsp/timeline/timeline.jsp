@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="d-flex justify-content-center">
 	<div class="contents-box">
@@ -18,6 +19,37 @@
 				<button type="button" id="uploadBtn" class="btn btn-info m-1">게시</button>
 			</div>
 		</div>
+		
+		<c:forEach var="post" items="${postList}">
+			<div class="card m-2">
+				<div class="d-flex justify-content-between">
+					<strong class="m-2">닉네임(user id: ${post.userId})</strong>
+					<img src="/static/img/more_icon.png" width="30" class="moreIcon m-2"/>
+				</div>
+				
+				<img src="${post.imagePath}" class="uploadedImg w-100">
+				
+				<div class="d-flex align-items-center">
+					<img src="/static/img/empty-heart.png" class="like_heart m-2" width="30"/>
+					<strong>좋아요</strong>&nbsp;11개
+				</div>
+				
+				<div class="m-2">${post.content}</div><hr>
+				
+				<strong class="m-2">댓글</strong>
+				
+				<div class="comments ml-4">
+					<strong>id: </strong>댓글내용
+				</div><hr>
+				
+				<div class="input-group">
+				  <input type="text" class="form-control border-0" placeholder="댓글 달기">
+				  <div class="input-group-append">
+				    <button class="btn btn-outline-secondary border-0" type="button">게시</button>
+				  </div>
+				</div>
+			</div>
+		</c:forEach>
 	</div>
 </div>
 
@@ -58,6 +90,8 @@ $(document).ready(function(){
 			return;
 		}
 		
+		let content = $('#writeTextArea').val();
+		
 		// form 태그를 자바스크립트에서 만든다.
 		let formData = new FormData();
 		formData.append("content", content);
@@ -77,7 +111,7 @@ $(document).ready(function(){
 			,success: function(data){
 				if(data.result == "success"){
 					alert("메모가 저장되었습니다.");
-					//location.href = "";
+					location.reload();
 				} else{
 					alert(data.errorMessage);
 				}
