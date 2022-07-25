@@ -9,23 +9,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.sns.post.bo.PostBO;
-import com.sns.post.model.Post;
+import com.sns.timeline.bo.TimelineBO;
+import com.sns.timeline.model.Card;
 
 @RequestMapping("/timeline")
 @Controller
 public class TimelineController {	// timeline table이 없으므로 TimelineDAO는 필요X
 	
-	@Autowired
-	private PostBO postBO;
+//	@Autowired
+//	private PostBO postBO;
 	
+	@Autowired
+	private TimelineBO timelineBO;
+	
+	// http://localhost:8080/timeline/timeline_view
 	@RequestMapping("/timeline_view")
 	public String timelineView(Model model, HttpSession session) {
 		Object userId = session.getAttribute("userId");
 		model.addAttribute("userId", userId);
 		
-		List<Post> postList = postBO.getPostList();
-		model.addAttribute("postList", postList);
+//		List<Post> postList = postBO.getPostList();
+//		model.addAttribute("postList", postList);
+		List<Card> cardList = timelineBO.generateCardList();
+		model.addAttribute("cardList", cardList);
 		
 		model.addAttribute("viewName", "timeline/timeline");
 		return "template/layout";

@@ -22,7 +22,54 @@
 		</div>
 		</c:if>
 		
-		<c:forEach var="post" items="${postList}">
+		<c:forEach var="card" items="${cardList}">
+			<div class="card m-2">
+				<div class="d-flex justify-content-between">
+					<strong class="m-2">닉네임(user id: ${card.post.userId})</strong>
+					<c:if test="${card.post.userId eq userId}">
+						<img src="/static/img/more_icon.png" width="30" class="moreIcon m-2"/>
+					</c:if>
+				</div>
+				
+				<img src="${card.post.imagePath}" class="uploadedImg w-100">
+				
+				<div class="d-flex align-items-center">
+					<img src="/static/img/empty-heart.png" class="like_heart m-2" width="30"/>
+					<strong>좋아요</strong>&nbsp;11개
+				</div>
+				
+				<div class="m-2">${card.post.content}</div>
+				
+				<strong class="p-2 border-top">댓글</strong>
+				
+				<c:forEach var="comment" items="${card.commentList}">
+					<div class="d-flex justify-content-between">
+						<div class="ml-4">
+							<strong>userId:${comment.userId}: </strong>${comment.content}
+						</div>
+						
+						<%-- 댓글 삭제 --%>
+						<c:if test="${userId eq comment.userId}">
+							<a href="#" class="commentDelBtn" data-comment-id="${comment.id}">
+								<img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10px" height="10px" class="mr-3">
+							</a>
+						</c:if>
+					</div>
+				</c:forEach>
+				
+				<%-- 댓글 달기 --%>
+				<c:if test="${not empty userId}">
+					<div class="comment-write d-flex border-top mt-2">
+						<input type="text" class="form-control border-0 mr-2" placeholder="댓글 달기"/> 
+						<button type="button" class="comment-btn btn btn-light" data-post-id="${card.post.id}">게시</button><!-- 'data-' + any name (but no Upper case) -->
+					</div>
+				</c:if>
+			</div>
+		</c:forEach>
+		
+		
+		
+		<%-- <c:forEach var="post" items="${postList}">
 			<div class="card m-2">
 				<div class="d-flex justify-content-between">
 					<strong class="m-2">닉네임(user id: ${post.userId})</strong>
@@ -47,13 +94,11 @@
 						<strong>id: </strong>댓글내용
 					</div>
 					
-					<%-- 댓글 삭제 --%>
 					<a href="#" class="commentDelBtn">
 						<img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10px" height="10px" class="mr-3">
 					</a>
 				</div>
 				
-				<%-- 댓글 달기 --%>
 				<c:if test="${not empty userId}">
 					<div class="comment-write d-flex border-top mt-2">
 						<input type="text" class="form-control border-0 mr-2" placeholder="댓글 달기"/> 
@@ -61,7 +106,7 @@
 					</div>
 				</c:if>
 			</div>
-		</c:forEach>
+		</c:forEach> --%>
 	</div>
 </div>
 
@@ -80,10 +125,10 @@ $(document).ready(function(){
 		
 		// 확장자 검증
 		if(arr.length < 2 || 
-				(arr[arr.length-1] != 'gif'
-						&& arr[arr.length-1] != 'jpg'
-						&& arr[arr.length-1] != 'jpeg'
-						&& arr[arr.length-1] != 'png')){
+				(arr[arr.length-1].toLowerCase() != 'gif'
+						&& arr[arr.length-1].toLowerCase() != 'jpg'
+						&& arr[arr.length-1].toLowerCase() != 'jpeg'
+						&& arr[arr.length-1].toLowerCase() != 'png')){
 			alert("이미지 파일만 업로드 가능합니다.");
 			$(this).val("");			// 서버에 잘못된 파일이 올라가기 전에 파일을 비움
 			$('#fileName').text("");	// 파일 이름 뜨는 것도 지워줌
@@ -151,6 +196,29 @@ $(document).ready(function(){
 			,success: function(data){
 				if(data.result == "success"){
 					
+					location.reload();
+				} else{
+					alert(data.errorMessage);
+				}
+			}
+			,error: function(e){
+				alert("댓글 게시 실패");
+			}
+		});
+	});
+	
+	$('.commentDelBtn').on('click',function(e){
+		let id = $(this).data('comment-id');	// 'data-' 뒤에 'post-id'
+		
+		$.ajax({
+			// request
+			type: "DELETE"
+			,url: "/comment/delete"
+			,data: {"id":id}
+			
+			// response
+			,success: function(data){
+				if(data.result == "success"){
 					location.reload();
 				} else{
 					alert(data.errorMessage);

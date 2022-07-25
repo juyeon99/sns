@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,7 +43,6 @@ public class CommentRestController {
 		
 		// 로그인 되어있음
 		int userId = (int) userIdObj;
-//		String userLoginId = (String)session.getAttribute("userLoginId");
 		
 		// comment db insert
 		commentBO.saveComment(userId, postId, content);
@@ -50,4 +50,11 @@ public class CommentRestController {
 		return result;
 	}
 	
+	@DeleteMapping("/delete")
+	public Map<String,Object> delete(@RequestParam("id") int id){
+		Map<String, Object> result = new HashMap<>();
+		result.put("result", "success");
+		commentBO.deleteComment(id);
+		return result;
+	}
 }

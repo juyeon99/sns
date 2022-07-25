@@ -21,4 +21,26 @@
 			, NOW()
 		)
     </insert>
+    
+    <select id="selectCommentListById" parameterType="int" resultType="com.sns.comment.model.Comment">
+    	SELECT
+ 			`id`
+ 			, `userId`
+			, `postId`
+			, `content`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`comment`
+		WHERE
+			`postId` = #{postId}
+    </select>
+    
+    <delete id="deleteComment" parameterType="int">
+    	DELETE
+		FROM
+			`comment`
+		WHERE
+			`id` = #{id}
+    </delete>
 </mapper>
