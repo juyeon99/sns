@@ -4,6 +4,7 @@
 
 <div class="d-flex justify-content-center">
 	<div class="contents-box">
+		<c:if test="${not empty userId}">
 		<div class="write-box border rounded m-3">
 			<textarea id="writeTextArea" class="w-100 border-0" placeholder="내용을 입력해주세요"></textarea>
 			<div class="d-flex justify-content-between">
@@ -19,12 +20,15 @@
 				<button type="button" id="uploadBtn" class="btn btn-info m-1">게시</button>
 			</div>
 		</div>
+		</c:if>
 		
 		<c:forEach var="post" items="${postList}">
 			<div class="card m-2">
 				<div class="d-flex justify-content-between">
 					<strong class="m-2">닉네임(user id: ${post.userId})</strong>
-					<img src="/static/img/more_icon.png" width="30" class="moreIcon m-2"/>
+					<c:if test="${post.userId eq userId}">
+						<img src="/static/img/more_icon.png" width="30" class="moreIcon m-2"/>
+					</c:if>
 				</div>
 				
 				<img src="${post.imagePath}" class="uploadedImg w-100">
@@ -38,16 +42,24 @@
 				
 				<strong class="m-2">댓글</strong>
 				
-				<div class="comments ml-4">
-					<strong>id: </strong>댓글내용
-				</div><hr>
-				
-				<div class="input-group">
-				  <input type="text" class="form-control border-0" placeholder="댓글 달기">
-				  <div class="input-group-append">
-				    <button class="btn btn-outline-secondary border-0" type="button">게시</button>
-				  </div>
+				<div class="d-flex justify-content-between">
+					<div class="comments ml-4">
+						<strong>id: </strong>댓글내용
+					</div>
+					
+					<%-- 댓글 삭제 --%>
+					<a href="#" class="commentDelBtn">
+						<img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10px" height="10px" class="mr-3">
+					</a>
 				</div>
+				
+				<%-- 댓글 달기 --%>
+				<c:if test="${not empty userId}">
+					<div class="comment-write d-flex border-top mt-2">
+						<input type="text" class="form-control border-0 mr-2" placeholder="댓글 달기"/> 
+						<button type="button" class="comment-btn btn btn-light" data-post-id="${post.id}">게시</button><!-- 'data-' + any name (but no Upper case) -->
+					</div>
+				</c:if>
 			</div>
 		</c:forEach>
 	</div>
@@ -110,16 +122,44 @@ $(document).ready(function(){
 			// response
 			,success: function(data){
 				if(data.result == "success"){
-					alert("메모가 저장되었습니다.");
+					alert("포스팅 완료.");
 					location.reload();
 				} else{
 					alert(data.errorMessage);
 				}
 			}
 			,error: function(e){
-				alert("메모 저장 실패");
+				alert("포스팅 실패");
 			}
 		});
-	}); 
+	});
+	
+	// 댓글 게시 버튼 클릭
+	$('.comment-btn').on('click',function(e){
+		let postId = $(this).data('post-id');	// 'data-' 뒤에 'post-id'
+		
+		// $(this).parent().children(".");		// 부모 태그 이용해서 댓글 내용 가져오기
+		let content = $(this).siblings("input").val().trim();	// 형제(sibling) 태그 이용해서 댓글 내용 가져오기
+		
+		$.ajax({
+			// request
+			type: "POST"
+			,url: "/comment/create"
+			,data: {"postId":postId,"content":content}
+			
+			// response
+			,success: function(data){
+				if(data.result == "success"){
+					
+					location.reload();
+				} else{
+					alert(data.errorMessage);
+				}
+			}
+			,error: function(e){
+				alert("댓글 게시 실패");
+			}
+		});
+	});
 });
 </script>
