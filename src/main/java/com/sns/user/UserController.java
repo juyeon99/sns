@@ -36,4 +36,13 @@ public class UserController {
 		return "redirect:/user/sign_in_view";
 	}
 	
+	// localhost:8080/user/profile_view
+	@RequestMapping("/profile_view")
+	public String profile(Model model, HttpSession session) {
+		Object userId = session.getAttribute("userId");
+		model.addAttribute("userId", userId);
+		
+		model.addAttribute("viewName", "user/profile");
+		return "template/layout";
+	}
 }

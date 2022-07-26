@@ -59,7 +59,7 @@ public class UserRestController {
 			@RequestParam("password") String password,
 			HttpServletRequest req){
 		String encryptedPassword = EncryptUtils.md5(password);
-		User user = userBO.getUserById(loginId,encryptedPassword);
+		User user = userBO.getUserByLoginId(loginId,encryptedPassword);
 		
 		Map<String,Object> result = new HashMap<>();
 		if(user != null) {

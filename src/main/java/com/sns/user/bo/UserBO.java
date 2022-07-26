@@ -26,8 +26,12 @@ public class UserBO {
 		userDAO.insertUser(loginId, password, name, email);
 	}
 	
-	public User getUserById(String loginId, String password) {
-		return userDAO.selectUserById(loginId, password);
+	public User getUserByLoginId(String loginId, String password) {
+		return userDAO.selectUserByLoginId(loginId, password);
+	}
+	
+	public User getUserById(int id) {
+		return userDAO.selectUserById(id);
 	}
 
 }

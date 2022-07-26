@@ -2,7 +2,7 @@ package com.sns.comment.model;
 
 import java.util.Date;
 
-public class Comment {
+public class Comment {	// Entity object
 	private int id;
 	private int userId;
 	private int postId;

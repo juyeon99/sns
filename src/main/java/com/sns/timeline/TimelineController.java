@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sns.timeline.bo.TimelineBO;
-import com.sns.timeline.model.Card;
+import com.sns.timeline.model.CardView;
 
 @RequestMapping("/timeline")
 @Controller
@@ -30,7 +30,7 @@ public class TimelineController {	// timeline table이 없으므로 TimelineDAO�
 		
 //		List<Post> postList = postBO.getPostList();
 //		model.addAttribute("postList", postList);
-		List<Card> cardList = timelineBO.generateCardList();
+		List<CardView> cardList = timelineBO.generateCardList();
 		model.addAttribute("cardList", cardList);
 		
 		model.addAttribute("viewName", "timeline/timeline");

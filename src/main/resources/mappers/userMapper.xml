@@ -46,7 +46,7 @@
 		)
     </insert>
     
-    <select id="selectUserById" parameterType="map" resultType="com.sns.user.model.User">
+    <select id="selectUserByLoginId" parameterType="map" resultType="com.sns.user.model.User">
     	SELECT
             `id`
             , `loginId`
@@ -61,5 +61,20 @@
         	`loginId` = #{loginId}
         AND
         	`password` = #{password}
+    </select>
+    
+    <select id="selectUserById" parameterType="int" resultType="com.sns.user.model.User">
+    	SELECT
+            `id`
+            , `loginId`
+            , `password`
+            , `name`
+			, `email`
+            , `createdAt`
+            , `updatedAt`
+        FROM
+            `user`
+        WHERE
+        	`id` = #{id}
     </select>
 </mapper>

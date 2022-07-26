@@ -25,7 +25,7 @@
 		<c:forEach var="card" items="${cardList}">
 			<div class="card m-2">
 				<div class="d-flex justify-content-between">
-					<strong class="m-2">닉네임(user id: ${card.post.userId})</strong>
+					<strong class="m-2">${card.user.name}</strong>
 					<c:if test="${card.post.userId eq userId}">
 						<img src="/static/img/more_icon.png" width="30" class="moreIcon m-2"/>
 					</c:if>
@@ -60,53 +60,12 @@
 				<%-- 댓글 달기 --%>
 				<c:if test="${not empty userId}">
 					<div class="comment-write d-flex border-top mt-2">
-						<input type="text" class="form-control border-0 mr-2" placeholder="댓글 달기"/> 
+						<input type="text" class="form-control border-0 mr-2 comment-text" placeholder="댓글 달기"/> 
 						<button type="button" class="comment-btn btn btn-light" data-post-id="${card.post.id}">게시</button><!-- 'data-' + any name (but no Upper case) -->
 					</div>
 				</c:if>
 			</div>
 		</c:forEach>
-		
-		
-		
-		<%-- <c:forEach var="post" items="${postList}">
-			<div class="card m-2">
-				<div class="d-flex justify-content-between">
-					<strong class="m-2">닉네임(user id: ${post.userId})</strong>
-					<c:if test="${post.userId eq userId}">
-						<img src="/static/img/more_icon.png" width="30" class="moreIcon m-2"/>
-					</c:if>
-				</div>
-				
-				<img src="${post.imagePath}" class="uploadedImg w-100">
-				
-				<div class="d-flex align-items-center">
-					<img src="/static/img/empty-heart.png" class="like_heart m-2" width="30"/>
-					<strong>좋아요</strong>&nbsp;11개
-				</div>
-				
-				<div class="m-2">${post.content}</div><hr>
-				
-				<strong class="m-2">댓글</strong>
-				
-				<div class="d-flex justify-content-between">
-					<div class="comments ml-4">
-						<strong>id: </strong>댓글내용
-					</div>
-					
-					<a href="#" class="commentDelBtn">
-						<img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10px" height="10px" class="mr-3">
-					</a>
-				</div>
-				
-				<c:if test="${not empty userId}">
-					<div class="comment-write d-flex border-top mt-2">
-						<input type="text" class="form-control border-0 mr-2" placeholder="댓글 달기"/> 
-						<button type="button" class="comment-btn btn btn-light" data-post-id="${post.id}">게시</button><!-- 'data-' + any name (but no Upper case) -->
-					</div>
-				</c:if>
-			</div>
-		</c:forEach> --%>
 	</div>
 </div>
 
@@ -186,6 +145,11 @@ $(document).ready(function(){
 		// $(this).parent().children(".");		// 부모 태그 이용해서 댓글 내용 가져오기
 		let content = $(this).siblings("input").val().trim();	// 형제(sibling) 태그 이용해서 댓글 내용 가져오기
 		
+		if(content.length < 1){
+			alert("댓글 내용을 입력하세요.");
+			return;
+		}
+		
 		$.ajax({
 			// request
 			type: "POST"
@@ -195,10 +159,9 @@ $(document).ready(function(){
 			// response
 			,success: function(data){
 				if(data.result == "success"){
-					
-					location.reload();
+					location.reload(true);		// 댓글 쓰고 나서 새로고침
 				} else{
-					alert(data.errorMessage);
+					alert(data.errorMesssage);
 				}
 			}
 			,error: function(e){
@@ -208,7 +171,7 @@ $(document).ready(function(){
 	});
 	
 	$('.commentDelBtn').on('click',function(e){
-		let id = $(this).data('comment-id');	// 'data-' 뒤에 'post-id'
+		let id = $(this).data('comment-id');	// 'data-' 뒤에 'comment-id'
 		
 		$.ajax({
 			// request
@@ -219,15 +182,14 @@ $(document).ready(function(){
 			// response
 			,success: function(data){
 				if(data.result == "success"){
-					location.reload();
-				} else{
-					alert(data.errorMessage);
+					location.reload(true);
 				}
 			}
 			,error: function(e){
-				alert("댓글 게시 실패");
+				alert("댓글 삭제 실패");
 			}
 		});
 	});
+	
 });
 </script>

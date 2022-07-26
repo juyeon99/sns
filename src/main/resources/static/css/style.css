@@ -16,3 +16,27 @@ footer{height:100px; background-color: #c9c9c9;}
 
 .contents-box {width:650px;}
 #writeTextArea {height:100px;}
+
+.pfp-cropper {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.image-cropper {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.box{
+	position:relative;
+	aspect-ratio : 1 / 1;
+	width:30%;
+	background-color: #dadada;
+	margin: 14px;
+}

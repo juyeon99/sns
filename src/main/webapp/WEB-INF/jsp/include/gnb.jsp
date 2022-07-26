@@ -12,7 +12,8 @@
 		<!-- 로그인이 되었을 때만(세션에 값이 있을 때만) 보이도록 -->
 		<c:if test="${not empty userId}">
 			<div>
-				<span class="text-white">${userName}님 안녕하세요!</span>
+				<a href="/user/profile_view"><img src="/static/img/pfp.png" class="m-2 pfp-cropper"/></a>
+				<span class="text-white">${userName}님 안녕하세요!</span>&nbsp;&nbsp;
 				<a href="/user/sign_out">로그아웃</a>
 			</div>
 		</c:if>
