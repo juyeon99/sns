@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sns.comment.bo.CommentBO;
+import com.sns.comment.model.CommentView;
 import com.sns.post.bo.PostBO;
 import com.sns.post.model.Post;
 import com.sns.timeline.model.CardView;
@@ -45,9 +46,9 @@ public class TimelineBO {
 			// 1:N 글:댓글	포스트의 댓글 정보
 			int postId = post.getId();	// 글 번호
 			
-			// List<Comment> => List<CommentView>
-//			List<Comment> commentList = commentBO.getCommentListByPostId(postId);
-//			card.setCommentViewList(commentBO.getCommentListByPostId(postId));
+			// Comment + User of comment
+			List<CommentView> commentViewList = commentBO.generateCommentViewListByPostId(postId);
+			card.setCommentViewList(commentViewList);
 			
 			cardList.add(card);
 		}

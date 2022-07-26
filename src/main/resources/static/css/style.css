@@ -36,7 +36,8 @@ footer{height:100px; background-color: #c9c9c9;}
 .box{
 	position:relative;
 	aspect-ratio : 1 / 1;
-	width:30%;
+	width: 30%;
 	background-color: #dadada;
-	margin: 14px;
+	margin-left: 2.5%;
+	margin-bottom: 2.5%;
 }

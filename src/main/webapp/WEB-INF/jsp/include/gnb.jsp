@@ -6,7 +6,7 @@
 
 <div class="h-100 d-flex justify-content-between align-items-center">
 	<div class="logo">
-		<h1 style="color:white;">Instagram</h1>
+		<a href="/timeline/timeline_view"><h1 style="color:white;">Instagram</h1></a>
 	</div>
 	<div class="login-info ml-4">
 		<!-- 로그인이 되었을 때만(세션에 값이 있을 때만) 보이도록 -->

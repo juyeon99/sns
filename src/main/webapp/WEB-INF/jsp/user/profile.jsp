@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <div class="d-flex justify-content-center">
-	<div class="w-50 p-5">
+	<div class="w-50 p-2">
 		<div class="d-flex">
 			<img src="/static/img/pfp.png" class="m-2 image-cropper"/>
 			<div class="ml-5">

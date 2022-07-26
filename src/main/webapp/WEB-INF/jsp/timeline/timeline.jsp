@@ -42,15 +42,15 @@
 				
 				<strong class="p-2 border-top">댓글</strong>
 				
-				<c:forEach var="comment" items="${card.commentList}">
+				<c:forEach var="commentView" items="${card.commentViewList}">
 					<div class="d-flex justify-content-between">
 						<div class="ml-4">
-							<strong>userId:${comment.userId}: </strong>${comment.content}
+							<strong>${commentView.user.name}: </strong>${commentView.comment.content}
 						</div>
 						
 						<%-- 댓글 삭제 --%>
-						<c:if test="${userId eq comment.userId}">
-							<a href="#" class="commentDelBtn" data-comment-id="${comment.id}">
+						<c:if test="${userId eq commentView.comment.userId}">
+							<a href="#" class="commentDelBtn" data-comment-id="${commentView.comment.id}">
 								<img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10px" height="10px" class="mr-3">
 							</a>
 						</c:if>

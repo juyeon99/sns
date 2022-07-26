@@ -9,12 +9,17 @@ import org.springframework.stereotype.Service;
 import com.sns.comment.dao.CommentDAO;
 import com.sns.comment.model.Comment;
 import com.sns.comment.model.CommentView;
+import com.sns.user.bo.UserBO;
+import com.sns.user.model.User;
 
 @Service
 public class CommentBO {
 	
 	@Autowired
 	private CommentDAO commentDAO;
+	
+	@Autowired
+	private UserBO userBO;
 
 	public void saveComment(int userId, int postId, String content) {
 		commentDAO.insertComment(userId, postId, content);
@@ -34,11 +39,14 @@ public class CommentBO {
 		for (Comment comment : commentList) {
 			CommentView commentView = new CommentView();
 			commentView.setComment(comment);
-			// set comment user
 			
+			// 댓글 쓴 사람
+			User user = userBO.getUserById(comment.getUserId());
+			commentView.setUser(user);
+			
+			commentViewList.add(commentView);
 		}
 		
-		
-		return ;
+		return commentViewList;
 	}
 }

@@ -40,6 +40,9 @@ public class UserController {
 	@RequestMapping("/profile_view")
 	public String profile(Model model, HttpSession session) {
 		Object userId = session.getAttribute("userId");
+//		if(userId == null) {		// 로그인이 안된 경우
+//			return "redirect:/user/sign_in_view";
+//		}
 		model.addAttribute("userId", userId);
 		
 		model.addAttribute("viewName", "user/profile");
