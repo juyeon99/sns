@@ -30,7 +30,6 @@ public class TimelineBO {
 	@Autowired
 	private CommentBO commentBO;
 	
-	
 	public List<CardView> generateCardList(){
 		List<CardView> cardList = new ArrayList<>();
 		List<Post> postList = postBO.getPostList();

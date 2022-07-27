@@ -18,6 +18,10 @@ public class CommentBO {
 	@Autowired
 	private CommentDAO commentDAO;
 	
+	// 단방향 (one way)
+	// timelineBO -> postBO	   -> userBO
+	// 			  -> commentBO -> userBO
+	
 	@Autowired
 	private UserBO userBO;
 
