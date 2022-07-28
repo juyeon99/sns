@@ -30,7 +30,7 @@ public class TimelineController {	// timeline table이 없으므로 TimelineDAO�
 		
 //		List<Post> postList = postBO.getPostList();
 //		model.addAttribute("postList", postList);
-		List<CardView> cardList = timelineBO.generateCardList();	// CardView = Post + Comment + User + Like
+		List<CardView> cardList = timelineBO.generateCardList((Integer) userId);	// CardView = Post + Comment + User + Like
 		model.addAttribute("cardList", cardList);
 		
 		model.addAttribute("viewName", "timeline/timeline");

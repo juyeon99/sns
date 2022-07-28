@@ -34,8 +34,13 @@
 				<img src="${card.post.imagePath}" class="uploadedImg w-100">
 				
 				<div class="d-flex align-items-center">
-					<img src="/static/img/empty-heart.png" class="like_heart m-2" width="30"/>
-					<strong>좋아요</strong>&nbsp;11개
+					<c:if test="${card.filledLike}">
+						<img src="/static/img/full-heart.png" class="like_heart m-2" width="30" data-post-id="${card.post.id}"/>
+					</c:if>
+					<c:if test="${!card.filledLike}">
+						<img src="/static/img/empty-heart.png" class="like_heart m-2" width="30" data-post-id="${card.post.id}"/>
+					</c:if>
+					<strong>좋아요</strong>&nbsp;${card.likeCount}개
 				</div>
 				
 				<div class="m-2">${card.post.content}</div>
@@ -191,5 +196,27 @@ $(document).ready(function(){
 		});
 	});
 	
+	$('.like_heart').on('click',function(e){
+		let postId = $(this).data('post-id');
+		
+		$.ajax({
+			// request
+			type: "POST"
+			,url: "/like/" + postId
+			//,data: {"postId":postId}
+			
+			// response
+			,success: function(data){
+				if(data.result == "success"){
+					location.reload(true);
+				} else{
+					alert(data.errorMesssage);
+				}
+			}
+			,error: function(e){
+				alert("좋아요 실패");
+			}
+		});
+	});
 });
 </script>
