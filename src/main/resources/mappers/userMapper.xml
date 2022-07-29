@@ -12,6 +12,8 @@
 			, `email`
             , `createdAt`
             , `updatedAt`
+            , `profileImagePath`
+            , `statusMessage`
         FROM
             `user`
     </select>
@@ -34,6 +36,7 @@
 			, `email`
 			, `createdAt`
 			, `updatedAt`
+			, `profileImagePath`
 		)
 		VALUES
 		(
@@ -43,6 +46,7 @@
 			, #{email}
 			, NOW()
 			, NOW()
+			, #{profileImagePath}
 		)
     </insert>
     
@@ -55,6 +59,8 @@
 			, `email`
             , `createdAt`
             , `updatedAt`
+            , `profileImagePath`
+            , `statusMessage`
         FROM
             `user`
         WHERE
@@ -72,6 +78,8 @@
 			, `email`
             , `createdAt`
             , `updatedAt`
+            , `profileImagePath`
+            , `statusMessage`
         FROM
             `user`
         WHERE

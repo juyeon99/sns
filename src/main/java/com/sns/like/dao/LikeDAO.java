@@ -22,4 +22,6 @@ public interface LikeDAO {
 
 	public int selectLikeCount(int postId);
 
+	public void deleteLikeByPostId(int postId);
+
 }

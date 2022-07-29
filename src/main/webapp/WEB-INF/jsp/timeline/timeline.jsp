@@ -10,7 +10,7 @@
 			<div class="d-flex justify-content-between">
 				<div class="d-flex">
 					<input type="file" id="file" class="d-none" accept=".jpg,.jpeg,.gif,.png">
-					<a href="#" id="fileUploadBtn">
+					<a href="#self" id="fileUploadBtn">
 						<img src="https://cdn-icons-png.flaticon.com/512/44/44289.png" width="35" class="m-1">
 					</a>
 					
@@ -27,7 +27,9 @@
 				<div class="d-flex justify-content-between">
 					<strong class="m-2">${card.user.name}</strong>
 					<c:if test="${card.post.userId eq userId}">
-						<img src="/static/img/more_icon.png" width="30" class="moreIcon m-2"/>
+						<a href="#" class="more-btn" data-toggle="modal" data-target="#moreModal" data-post-id="${card.post.id}">
+							<img src="/static/img/more_icon.png" width="30" class="moreIcon m-2"/>
+						</a>
 					</c:if>
 				</div>
 				
@@ -73,6 +75,25 @@
 		</c:forEach>
 	</div>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="moreModal">
+	<div class="modal-dialog modal-sm modal-dialog-centered">
+    	<div class="modal-content">
+    		<!-- modal창 안에 내용 넣기 -->
+    		<div class="text-center py-3">
+    			<!-- d-block: 클릭할 수 있는 영역 넓힘 -->
+    			<a href="#" class="del-post d-block">삭제하기</a>
+    		</div>
+    		<div class="text-center py-3 border-top">
+    			<!-- data-dissmiss: modal창 닫힘 -->
+    			<a href="#" class="d-block" data-dismiss="modal">취소</a>
+    		</div>
+    	</div>
+  	</div>
+</div>
+
 
 <script>
 $(document).ready(function(){
@@ -215,6 +236,41 @@ $(document).ready(function(){
 			}
 			,error: function(e){
 				alert("좋아요 실패");
+			}
+		});
+	});
+	
+	// ... 더보기 버튼 클릭시, 모달에 삭제될 post id를 넣어준다.
+	$('.more-btn').on('click',function(e){
+		// e.preventDefault();		// a 태그 기본동작(스크롤 업) 중단	= #self
+		
+		let postId = $(this).data('post-id');
+		
+		// modal에 삭제될 글 번호를 심어줌 (modal은 재활용 되기 때문)
+		$('#moreModal').data('post-id', postId);	// adding <data-post-id = postId>
+	});
+	
+	// modal창 안에 있는 삭제하기 버튼 클릭
+	$('#moreModal .del-post').on('click',function(e){
+		e.preventDefault();
+		
+		let postId = $('#moreModal').data('post-id');
+		
+		
+		// 서버 삭제 요청
+		$.ajax({
+			type:"DELETE",
+			url: "/post/delete",
+			data:{"postId":postId},
+			success: function(data){
+				if(data.result == "success"){
+					location.reload(true);
+				}else{
+					alert(data.errorMessage);
+				}
+			},
+			error: function(e){
+				alert("삭제하는데 실패했습니다. 관리자에게 문의해주세요.");
 			}
 		});
 	});

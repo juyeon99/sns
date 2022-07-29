@@ -34,4 +34,51 @@
 			`post`
 		ORDER BY `id` DESC
     </select>
+    
+    <select id="selectPostListByUserId" parameterType="int" resultType="com.sns.post.model.Post">
+ 		SELECT
+ 			`id`
+ 			,`userId`
+			,`content`
+			,`imagePath`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`post`
+		WHERE
+			`userId` = #{userId}
+		ORDER BY `id` DESC
+    </select>
+    
+    <select id="selectPostById" parameterType="int" resultType="com.sns.post.model.Post">
+ 		SELECT
+ 			`id`
+ 			,`userId`
+			,`content`
+			,`imagePath`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`post`
+		WHERE
+			`id` = #{postId}
+    </select>
+    
+    <delete id="deletePostByPostIdAndUserId" parameterType="map">
+    	DELETE
+		FROM
+			`post`
+		WHERE
+			`id` = #{postId}
+			AND `userId` = #{userId}
+    </delete>
+    
+    <select id="selectPostCount" parameterType="int" resultType="int">
+    	SELECT
+ 			COUNT(*)
+		FROM
+			`post`
+		WHERE
+			`userId` = #{userId}
+    </select>
  </mapper>

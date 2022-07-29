@@ -10,6 +10,8 @@ public class User {
 	private String email;
 	private Date createdAt;
 	private Date updatedAt;
+	private String profileImagePath;
+	private String statusMessage;
 	
 	public int getId() {
 		return id;
@@ -52,5 +54,17 @@ public class User {
 	}
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+	public String getProfileImagePath() {
+		return profileImagePath;
+	}
+	public void setProfileImagePath(String profileImagePath) {
+		this.profileImagePath = profileImagePath;
+	}
+	public String getStatusMessage() {
+		return statusMessage;
+	}
+	public void setStatusMessage(String statusMessage) {
+		this.statusMessage = statusMessage;
 	}
 }

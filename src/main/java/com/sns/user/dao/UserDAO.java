@@ -17,7 +17,8 @@ public interface UserDAO {
 			@Param("loginId") String loginId, 
 			@Param("password") String password, 
 			@Param("name") String name, 
-			@Param("email") String email);
+			@Param("email") String email,
+			@Param("profileImagePath") String profileImagePath);
 	
 	public User selectUserByLoginId(
 			@Param("loginId") String loginId, 

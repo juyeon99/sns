@@ -46,7 +46,7 @@ public class UserRestController {
 			@RequestParam("email") String email){
 		String encryptedPassword = EncryptUtils.md5(password);
 		
-		userBO.addUser(loginId,encryptedPassword,name,email);
+		userBO.addUser(loginId,encryptedPassword,name,email,"/images/default_pfp/pfp.png");
 		
 		Map<String,Object> result = new HashMap<>();
 		result.put("result", "success");

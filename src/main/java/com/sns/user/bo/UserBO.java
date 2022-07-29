@@ -22,8 +22,8 @@ public class UserBO {
 		return userDAO.existingID(loginId);
 	}
 
-	public void addUser(String loginId, String password, String name, String email) {
-		userDAO.insertUser(loginId, password, name, email);
+	public void addUser(String loginId, String password, String name, String email, String profileImagePath) {
+		userDAO.insertUser(loginId, password, name, email, profileImagePath);
 	}
 	
 	public User getUserByLoginId(String loginId, String password) {

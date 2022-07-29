@@ -18,5 +18,7 @@ public interface CommentDAO {
 	public List<Comment> selectCommentListByPostId(int postId);
 	
 	public void deleteComment(int id);
+
+	public void deleteCommentByPostId(int postId);	// Deletes all the comments in the post
 	
 }
