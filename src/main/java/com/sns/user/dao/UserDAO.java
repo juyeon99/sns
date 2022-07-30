@@ -9,6 +9,7 @@ import com.sns.user.model.User;
 
 @Repository
 public interface UserDAO {
+	
 	public List<User> selectUserList();
 	
 	public boolean existingID(String loginId);
@@ -25,4 +26,10 @@ public interface UserDAO {
 			@Param("password") String password);
 	
 	public User selectUserById(int id);
+
+	public void updateUser(
+			@Param("id") int id, 
+			@Param("name") String name, 
+			@Param("statusMessage") String statusMessage, 
+			@Param("profileImagePath") String profileImagePath);
 }

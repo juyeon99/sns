@@ -25,7 +25,13 @@
 		<c:forEach var="card" items="${cardList}">
 			<div class="card m-2">
 				<div class="d-flex justify-content-between">
-					<strong class="m-2">${card.user.name}</strong>
+					<div class="d-flex align-items-center">
+						<div class="img-wrapper2 m-2">
+							<a href="/user/profile_by_id_view?userId=${card.user.id}"><img src="${card.user.profileImagePath}"/></a>
+						</div>
+						<strong>${card.user.name}</strong>
+					</div>
+					
 					<c:if test="${card.post.userId eq userId}">
 						<a href="#" class="more-btn" data-toggle="modal" data-target="#moreModal" data-post-id="${card.post.id}">
 							<img src="/static/img/more_icon.png" width="30" class="moreIcon m-2"/>

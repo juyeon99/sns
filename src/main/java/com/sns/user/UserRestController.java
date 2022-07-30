@@ -8,9 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sns.common.EncryptUtils;
 import com.sns.user.bo.UserBO;
@@ -57,7 +60,8 @@ public class UserRestController {
 	public Map<String,Object> signIn(
 			@RequestParam("loginId") String loginId,
 			@RequestParam("password") String password,
-			HttpServletRequest req){
+			HttpServletRequest req,
+			Model model){
 		String encryptedPassword = EncryptUtils.md5(password);
 		User user = userBO.getUserByLoginId(loginId,encryptedPassword);
 		
@@ -69,6 +73,8 @@ public class UserRestController {
 			session.setAttribute("userLoginId", user.getLoginId());
 			session.setAttribute("userName", user.getName());
 			
+			session.setAttribute("profileImagePath", user.getProfileImagePath());
+			
 			result.put("result", "success");
 		} else {
 			// 실패하면 실패 응답
@@ -78,4 +84,34 @@ public class UserRestController {
 		return result;
 	}
 	
+	@PostMapping("/edit_profile")
+	public Map<String,Object> editProfile(
+			@RequestParam("name") String name,
+			@RequestParam("bio") String bio,
+			@RequestParam(value="file", required=false) MultipartFile file,
+			HttpSession session){
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("result", "success");
+		
+		Object userIdObj = session.getAttribute("userId");
+		if(userIdObj == null) {		// 로그인 되어있지 않음
+			result.put("result", "error");
+			result.put("errorMessage", "로그인 후 사용 가능합니다.");
+			return result;
+		}
+		
+		// 로그인 되어있음
+		int userId = (int) userIdObj;
+		
+		// user profile update
+		userBO.updateUser(userId, name, bio, file);
+		
+		// session update as user profile changed
+		User user = userBO.getUserById(userId);
+		session.setAttribute("userName", user.getName());
+		session.setAttribute("profileImagePath", user.getProfileImagePath());
+		
+		return result;
+	}
 }

@@ -85,4 +85,15 @@
         WHERE
         	`id` = #{id}
     </select>
+    
+    <update id="updateUser" parameterType="map">
+ 		UPDATE `user`
+ 		SET
+ 			`name` = #{name}
+ 			,`profileImagePath` = #{profileImagePath}
+ 			,`statusMessage` = #{statusMessage}
+ 			,`updatedAt` = NOW()
+ 		WHERE
+ 			`id` = #{id}
+ 	</update>
 </mapper>

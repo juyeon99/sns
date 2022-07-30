@@ -7,7 +7,6 @@ public class Follow {
 	private String followRequestedUserId;
 	private String followAcceptedUserId;
 	private Date createdAt;
-	private Date updatedAt;
 	
 	public int getId() {
 		return id;
@@ -32,11 +31,5 @@ public class Follow {
 	}
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
-	}
-	public Date getUpdatedAt() {
-		return updatedAt;
-	}
-	public void setUpdatedAt(Date updatedAt) {
-		this.updatedAt = updatedAt;
 	}
 }

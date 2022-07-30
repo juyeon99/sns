@@ -17,7 +17,7 @@ footer{height:100px; background-color: #c9c9c9;}
 .contents-box {width:650px;}
 #writeTextArea {height:100px;}
 
-.pfp-cropper {
+/* .pfp-cropper {
   width: 30px;
   height: 30px;
   position: relative;
@@ -31,7 +31,7 @@ footer{height:100px; background-color: #c9c9c9;}
   position: relative;
   overflow: hidden;
   border-radius: 50%;
-}
+} */
 
 .box{
 	position:relative;
@@ -40,4 +40,69 @@ footer{height:100px; background-color: #c9c9c9;}
 	background-color: #dadada;
 	margin-left: 2.5%;
 	margin-bottom: 2.5%;
+}
+
+/* .image-cropper2 {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+} */
+
+/* Reference: https://memostack.tistory.com/260 
+   이미지 정사각형으로 자르기 */
+#img-wrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+
+#img-wrapper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(50, 50);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: auto;
+    border-radius: 50%;
+}
+
+.img-wrapper2 {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.img-wrapper2 img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(50, 50);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: auto;
+    border-radius: 50%;
+}
+
+#img-wrapper3 {
+    position: relative;
+    width: 200px;
+    height: 200px;
+}
+
+#img-wrapper3 img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(50, 50);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: auto;
+    border-radius: 50%;
 }
