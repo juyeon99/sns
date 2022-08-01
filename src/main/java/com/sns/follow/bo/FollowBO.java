@@ -1,9 +1,12 @@
 package com.sns.follow.bo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sns.follow.dao.FollowDAO;
+import com.sns.follow.model.Follow;
 
 @Service
 public class FollowBO {
@@ -29,6 +32,14 @@ public class FollowBO {
 	
 	public int countFollowings(int userId) {
 		return followDAO.countFollowings(userId);
+	}
+	
+	public List<Follow> getFollowersList(int userId) {
+		return followDAO.selectFollowersList(userId);
+	}
+	
+	public List<Follow> getFollowingList(int userId) {
+		return followDAO.selectFollowingList(userId);
 	}
 
 }

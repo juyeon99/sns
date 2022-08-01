@@ -32,8 +32,12 @@
 				</div>
 				<div class="d-flex align-items-center mt-4">
 					<span style="font-size:20px;"><strong id="posts">${postCount}</strong> posts</span>
-					<span class="ml-5" style="font-size:20px;"><strong id="followers">${followers}</strong> followers</span>
-					<span class="ml-5" style="font-size:20px;"><strong id="following">${followings}</strong> following</span>
+					<a href="/user/following_list_view?userId=${user.id}&page=followers">
+						<span class="ml-5" style="font-size:20px; color:black;"><strong id="followers">${followers}</strong> followers</span>
+					</a>
+					<a href="/user/following_list_view?userId=${user.id}&page=following">
+						<span class="ml-5" style="font-size:20px; color:black;"><strong id="following">${following}</strong> following</span>
+					</a>
 				</div>
 				<div class="mt-4">
 					<span id="introduce" style="font-size:20px;">${user.statusMessage}</span>
@@ -41,6 +45,10 @@
 			</div>
 		</div>
 		<hr>
+		
+		<c:if test="${empty postList}">
+			<h1 class="text-center m-5">No posts</h1>
+		</c:if>
 		
 		<div class="d-flex flex-wrap">
 			<c:forEach var="post" items="${postList}">
@@ -198,7 +206,7 @@ $(document).ready(function(){
 			
 			success: function(data){
 				if(data.result == "success"){
-					alert("프로필을 변경하였습니다.")
+					alert("프로필을 변경하였습니다.");
 					location.reload(true);
 				}else{
 					alert(data.errorMessage);
@@ -209,5 +217,25 @@ $(document).ready(function(){
 			}
 		});
 	});
+	
+	/* $('#showFollowersList').on('click',function(e){
+		let userId = $(this).data('followers-id');
+		
+		$.ajax({
+			type:"GET",
+			url: "/user/following_list_view",
+			data: {"userId":userId},
+			success: function(data){
+				if(data.result == "success"){
+					location.href="/user/following_list_view";
+				}else{
+					alert(data.errorMessage);
+				}
+			},
+			error: function(e){
+				alert("프로필을 편집하는데 실패했습니다. 관리자에게 문의해주세요.");
+			}
+		});
+	}); */
 });
 </script>

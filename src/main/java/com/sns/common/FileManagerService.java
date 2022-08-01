@@ -12,8 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 //Spring Bean
 @Component		// Controller, service, repository
 public class FileManagerService {
-//	public final static String FILE_UPLOAD_PATH = "D:\\web_dev_juyeon\\spring_project\\sns\\workspace\\images/";
-	public final static String FILE_UPLOAD_PATH = "/Users/jenniferhong/OneDrive/spring/sns/images/";	// on MAC
+	public final static String FILE_UPLOAD_PATH = "D:\\web_dev_juyeon\\spring_project\\sns\\workspace\\images/";
+//	public final static String FILE_UPLOAD_PATH = "/Users/jenniferhong/OneDrive/spring/sns/images/";	// on MAC
 	
 	// input: MultipartFile, userLoginId
 	// output: String path

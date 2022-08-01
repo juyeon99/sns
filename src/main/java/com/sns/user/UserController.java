@@ -1,5 +1,6 @@
 package com.sns.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sns.follow.bo.FollowBO;
+import com.sns.follow.model.Follow;
 import com.sns.post.bo.PostBO;
 import com.sns.post.model.Post;
 import com.sns.user.bo.UserBO;
@@ -73,7 +75,7 @@ public class UserController {
 		model.addAttribute("postCount",postCount);
 		
 		model.addAttribute("followers", followBO.countFollowers((int)userId));
-		model.addAttribute("followings", followBO.countFollowings((int)userId));
+		model.addAttribute("following", followBO.countFollowings((int)userId));
 		
 		model.addAttribute("viewName", "user/profile");
 		return "template/layout";
@@ -84,7 +86,8 @@ public class UserController {
 	public String profileById(
 			Model model,
 			HttpSession session,
-			@RequestParam("userId") int userId) {
+			@RequestParam("userId") int userId) {	// 내가 following했는지 확인할 다른 사람 userId
+		
 		User user = userBO.getUserById(userId);
 		List<Post> postList = postBO.getPostListByUserId(userId);
 		int postCount = postBO.getPostCount(userId);
@@ -93,7 +96,7 @@ public class UserController {
 		model.addAttribute("postList",postList);
 		model.addAttribute("postCount",postCount);
 		
-		Object userIdObj = session.getAttribute("userId");	// login된 user id
+		Object userIdObj = session.getAttribute("userId");	// login된 내 user id
 		model.addAttribute("userId", userIdObj);
 		
 		if(userIdObj != null) {
@@ -106,9 +109,44 @@ public class UserController {
 		}
 		
 		model.addAttribute("followers", followBO.countFollowers(userId));
-		model.addAttribute("followings", followBO.countFollowings(userId));
+		model.addAttribute("following", followBO.countFollowings(userId));
 		
 		model.addAttribute("viewName", "user/profile");
+		return "template/layout";
+	}
+	
+	// localhost:8080/user/following_list_view
+	@GetMapping("/following_list_view")
+	public String followingListView(
+			Model model,
+			HttpSession session,
+			@RequestParam("userId") int userId,
+			@RequestParam("page") String page) {
+		model.addAttribute("userId", userId);
+		model.addAttribute("followers", followBO.countFollowers(userId));
+		model.addAttribute("following", followBO.countFollowings(userId));
+		model.addAttribute("page", page);
+		
+		List<Follow> followers = followBO.getFollowersList(userId);	// user를 팔로우
+		List<Follow> following = followBO.getFollowingList(userId);	// user가 팔로잉
+		
+		List<User> followersList = new ArrayList<>();
+		List<User> followingList = new ArrayList<>();
+		
+		for (Follow follow : followers) {	// 유저를 팔로우하는 유저리스트
+			User user = userBO.getUserById(follow.getFollowRequestedUserId());
+			followersList.add(user);
+		}
+		for (Follow follow : following) {	// 유저가 팔로잉하는 유저리스트
+			User user = userBO.getUserById(follow.getFollowAcceptedUserId());
+			followingList.add(user);
+		}
+		
+		model.addAttribute("followersList", followersList);
+		model.addAttribute("followingList", followingList);
+		
+		model.addAttribute("viewName", "user/followingList");
+		
 		return "template/layout";
 	}
 }

@@ -54,4 +54,28 @@
         WHERE
         	`followRequestedUserId` = #{requestedUserId}
     </select>
+    
+    <select id="selectFollowersList" parameterType="int" resultType="com.sns.follow.model.Follow">
+ 		SELECT
+ 			`id`
+ 			,`followRequestedUserId`
+			, `followAcceptedUserId`
+			, `createdAt`
+		FROM
+            `follow`
+        WHERE
+        	`followAcceptedUserId` = #{userId}
+ 	</select>
+ 	
+ 	<select id="selectFollowingList" parameterType="int" resultType="com.sns.follow.model.Follow">
+ 		SELECT
+ 			`id`
+ 			,`followRequestedUserId`
+			, `followAcceptedUserId`
+			, `createdAt`
+		FROM
+            `follow`
+        WHERE
+        	`followRequestedUserId` = #{userId}
+ 	</select>
 </mapper>

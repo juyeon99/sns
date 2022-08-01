@@ -32,4 +32,5 @@ public interface UserDAO {
 			@Param("name") String name, 
 			@Param("statusMessage") String statusMessage, 
 			@Param("profileImagePath") String profileImagePath);
+
 }

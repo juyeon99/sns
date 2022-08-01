@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class Follow {
 	private int id;
-	private String followRequestedUserId;
-	private String followAcceptedUserId;
+	private int followRequestedUserId;
+	private int followAcceptedUserId;
 	private Date createdAt;
 	
 	public int getId() {
@@ -14,16 +14,16 @@ public class Follow {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getFollowRequestedUserId() {
+	public int getFollowRequestedUserId() {
 		return followRequestedUserId;
 	}
-	public void setFollowRequestedUserId(String followRequestedUserId) {
+	public void setFollowRequestedUserId(int followRequestedUserId) {
 		this.followRequestedUserId = followRequestedUserId;
 	}
-	public String getFollowAcceptedUserId() {
+	public int getFollowAcceptedUserId() {
 		return followAcceptedUserId;
 	}
-	public void setFollowAcceptedUserId(String followAcceptedUserId) {
+	public void setFollowAcceptedUserId(int followAcceptedUserId) {
 		this.followAcceptedUserId = followAcceptedUserId;
 	}
 	public Date getCreatedAt() {
